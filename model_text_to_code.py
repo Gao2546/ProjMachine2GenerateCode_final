@@ -199,8 +199,8 @@ def create_model():
 
 def gencode(question):
     with torch.no_grad():
-      print("input : ",question)
-      print("++++++++++++++++++++++++++++++++++")
+    #   print("input : ",question)
+    #   print("++++++++++++++++++++++++++++++++++")
       oou=[]
       oo = tokenizer_a.encode("<BOS>")
       oou.append(oo[0])
@@ -216,7 +216,7 @@ def gencode(question):
           else:
             oou.append(oo[-1])
             pass
-      print("".join(tokenizer_a.convert_ids_to_tokens(oou)))
+    #   print("".join(tokenizer_a.convert_ids_to_tokens(oou)))
       return "".join(tokenizer_a.convert_ids_to_tokens(oou)).replace("<BOS>","").replace("<EOS>","")
 
 

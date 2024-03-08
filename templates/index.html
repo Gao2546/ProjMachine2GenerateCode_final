@@ -17,12 +17,12 @@
 
 <style>
   .my-box {
-    width: 50%;
+    width: 70%;
     height: 100%;
     padding: 10px;
     margin: 0 auto;
     color: white;
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .message-history {
@@ -61,19 +61,27 @@
     margin-left:5px;
     color: white;
     text-decoration: none;
-    width: 80%;
   }
   .s-message{
     display: block;
     margin-left:30px;
+    padding-right:30px;
     width: 100%;
   }
   .code{
     background-color:rgb(24, 24, 26);
     padding: 10px;border-radius: 10px;
     color: white;
-    width: 80%;
-    word-wrap: break-word;
+    width: 100%;
+    overflow-x:scroll;
+  }
+  .text{
+    background-color:rgb(24, 24, 26);
+    padding: 10px;border-radius: 10px;
+    color: white;
+    width: 100%;
+    white-space: pre-wrap;
+    
   }
   .inp-box{
     margin:0 auto;
@@ -99,7 +107,7 @@
 <body>
   {% block content %}
 
-  <h1 style="text-align: center;margin-top:20px;color: white;"> Text To Code </h1>
+  <h1 style="text-align: center;margin-top:20px;color: white;font-family: Arial, Helvetica, sans-serif;"> Text To Code </h1>
   <div class="my-box">
     <div class="message-history" id="message-history">
       <!-- {%for i in range(0, len)%}
@@ -119,7 +127,7 @@
     </div>
     <div class="inpp-box">
       <form id = "send_data_ipn"  novalidate>
-        {{ form.name(size=20,id = "input_question",type="text",class="inp-box",id="user-message",placeholder="   Enter your question",autocomplete="off") }}
+        {{ form.Q(size=20,id = "input_question",type="text",class="inp-box",id="user-message",placeholder="   Enter your question",autocomplete="off") }}
       </form>
     </div>
   </div>
@@ -172,14 +180,35 @@
 
                       const new_system = document.createElement("a")
                       new_system.textContent = "system message : "
-                      const new_message_s = document.createElement("code")
+                      const new_message_s = document.createElement("div")
                       new_message_s.classList.add("s-message")
-                      const code_s = document.createElement("pre")
-                      code_s.classList.add("code")
-                      code_s.textContent = list_system_message[lens-1]
-                      new_message_s.appendChild(code_s)
+                      // const code_s = document.createElement("pre")
+                      // code_s.classList.add("code")
+                      // code_s.textContent = list_system_message[lens-1]
+                      // new_message_s.appendChild(code_s)
 
                       new_system_message.appendChild(new_system)
+
+                      for (let index = 0; index < list_system_message[lens-1].length; index++) {
+                        const sys_out = list_system_message[lens-1][index];
+                        console.log(sys_out)
+                        if (sys_out == "text"){
+                          const code_s = document.createElement("pre")
+                          code_s.classList.add("text")
+                          index ++;
+                          code_s.textContent = list_system_message[lens-1][index];
+                          new_message_s.appendChild(code_s)
+                        }
+                        else{
+                          const code_s = document.createElement("pre")
+                          code_s.classList.add("code")
+                          index ++;
+                          code_s.textContent = list_system_message[lens-1][index];
+                          new_message_s.appendChild(code_s)
+                        }
+                        
+                      }
+
                       new_system_message.appendChild(new_message_s)
 
 
